@@ -1,0 +1,44 @@
+with tab5:
+    if st.session_state.uploaded_file is not None:
+        def update_closed_loop_response(lambda_value):
+            """Simulate and plot closed-loop response."""
+            time = np.linspace(0, 10, 100)  # Generate time vector
+            response = 1 - np.exp(-time / lambda_value)  # Example response curve
+
+            # Create the plot
+            fig, ax = plt.subplots(figsize=(6, 4))
+            ax.plot(time, response, label=f"λ = {lambda_value}", color='b')
+            ax.set_title("Closed-Loop Response")
+            ax.set_xlabel("Time")
+            ax.set_ylabel("Response")
+            ax.legend()
+            return fig
+
+        def main():
+            # Create two equal-width columns
+            col1, col2 = st.columns([1, 1])
+
+            with col1:
+                st.subheader("Simulation Settings")
+
+                # Lambda slider for closed-loop time constant
+                lambda_value = st.slider(
+                    "λ (Desired Closed-Loop Time Constant):", 
+                    min_value=0.1, max_value=10.0, value=1.0, step=0.1
+                )
+
+                # Simulation time input
+                sim_time = st.number_input(
+                    "Simulation Time (min):", 
+                    min_value=1.0, max_value=100.0, value=10.0, step=0.1
+                )
+
+            with col2:
+                st.subheader("Closed-Loop Response Plot")
+                # Generate and display the plot
+                fig = update_closed_loop_response(lambda_value)
+                st.pyplot(fig)
+                
+        # Run the app
+        if __name__ == "__main__":
+            main()
