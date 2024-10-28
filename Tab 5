@@ -1,7 +1,4 @@
-import matplotlib.pyplot as plt
-
-with tab5:
-    if st.session_state.uploaded_file is not None:
+if st.session_state.uploaded_file is not None:
         def update_closed_loop_response(lambda_value):
             """Simulate and plot closed-loop response."""
             time = np.linspace(0, 10, 100)  # Generate time vector
@@ -18,7 +15,7 @@ with tab5:
 
         def main():
             # Create two equal-width columns
-            col1, col2, col3 = st.columns([1, 0.05, 3])
+            col1, col2, col3 = st.columns([1, 0.05, 2])
 
             with col1:
                 
@@ -29,7 +26,7 @@ with tab5:
                 theta = st.session_state.o_value  # Dead Time
 
                 # Streamlit app layout
-                st.title("Process Parameters")
+                st.subheader("Process Parameters")
 
                 # Display the calculated values
                 st.write(f"**Kp (Process Gain):** {Kp:.2f}")
